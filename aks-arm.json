@@ -1,0 +1,83 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "location": {
+        "type": "string",
+        "defaultValue": "East US",
+        "metadata": {
+          "description": "Location for the AKS cluster."
+        }
+      },
+      "aksClusterName": {
+        "type": "string",
+        "defaultValue": "myAKSCluster",
+        "metadata": {
+          "description": "Name of the AKS cluster."
+        }
+      },
+      "dnsPrefix": {
+        "type": "string",
+        "defaultValue": "myaksdns",
+        "metadata": {
+          "description": "DNS prefix for the AKS cluster."
+        }
+      },
+      "nodeVmSize": {
+        "type": "string",
+        "defaultValue": "Standard_DS2_v2",
+        "metadata": {
+          "description": "VM size for the AKS nodes."
+        }
+      },
+      "nodeCount": {
+        "type": "int",
+        "defaultValue": 2,
+        "minValue": 1,
+        "metadata": {
+          "description": "Number of nodes in the default node pool."
+        }
+      },
+      "adminUsername": {
+        "type": "string",
+        "defaultValue": "azureuser",
+        "metadata": {
+          "description": "Admin username for the AKS cluster nodes."
+        }
+      }
+    },
+    "resources": [
+      {
+        "type": "Microsoft.ContainerService/managedClusters",
+        "apiVersion": "2023-01-01",
+        "name": "[parameters('aksClusterName')]",
+        "location": "[parameters('location')]",
+        "properties": {
+          "dnsPrefix": "[parameters('dnsPrefix')]",
+          "agentPoolProfiles": [
+            {
+              "name": "nodepool1",
+              "count": "[parameters('nodeCount')]",
+              "vmSize": "[parameters('nodeVmSize')]",
+              "osType": "Linux",
+              "mode": "System"
+            }
+          ],
+          "identity": {
+            "type": "SystemAssigned"
+          },
+          "enableRBAC": true
+        }
+      }
+      {
+        "type": 
+      }
+    ],
+    "outputs": {
+      "aksClusterName": {
+        "type": "string",
+        "value": "[parameters('aksClusterName')]"
+      }
+    }
+  }
+  

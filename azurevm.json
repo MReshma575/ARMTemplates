@@ -1,0 +1,64 @@
+{
+
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  
+    "contentVersion": "1.0.0",
+  
+    "parameters": {
+  
+      "vmName": {
+  
+        "type": "string",
+  
+        "defaultValue": "AzuretestVM"
+  
+      },
+      "Ostype": {
+        "type": "string",
+        "defaultValue": "Linux"
+      }
+  
+    },
+  
+    "resources": [
+  
+      {
+  
+        "type": "Microsoft.Compute/virtualMachines",
+  
+        "name": "[parameters('vmName')]",
+  
+        "apiVersion": "2023-03-01",
+  
+        "properties": {
+  
+          "storageProfile": {
+  
+            "imageReference": {
+  
+              "publisher": "MicrosoftWindowsServer",
+  
+              "offer": "WindowsServer",
+  
+              "sku": "2022-datacenter-core-v2",
+  
+              "version": "latest"
+  
+            }
+  
+          },
+  
+          "hardwareProfile": {
+  
+            "vmSize": "Standard_B2s"
+  
+          }
+  
+        }
+  
+      }
+  
+    ]
+  
+  }
+  
